@@ -25,6 +25,7 @@ app.use('/api/projects', projectRoutes)
 
 //Prueba
 app.use ("/prueba", (req: Request, res: Response, next: NextFunction) => {
+    res.set("Cache-Control", "no-store");
     res.status(200).json("Funciona el servidor")
 })
 
