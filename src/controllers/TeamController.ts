@@ -20,6 +20,10 @@ export class TeamMemberController {
             path: 'team',
             select: 'id email name'
         })
+        if(!project) {
+            const error = new Error('Projecto no encontrado')
+            return res.status(404).json({error: error.message})
+        }
         res.json(project.team)
     }
 
@@ -46,7 +50,7 @@ export class TeamMemberController {
 
     static removeMemberById = async (req: Request, res: Response) => {
         const { userId } = req.params
-
+        
         if(!req.project.team.some(team => team.toString() ===  userId)) {
             const error = new Error('El usuario no existe en el proyecto')
             return res.status(409).json({error: error.message})
