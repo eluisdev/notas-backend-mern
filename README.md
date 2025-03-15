@@ -1,4 +1,4 @@
-# 🚀 MERN Stack Project - Backend (UpTask)
+# 🚀 React MERN Backend Project
 
 ## 🛠 Technologies Used
 
