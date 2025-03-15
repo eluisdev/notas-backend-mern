@@ -9,9 +9,9 @@ export class ProjectController {
         project.manager = req.user.id
         try {
             await project.save() 
-            res.send('Proyecto Creando Correctamente')
+            res.send('Proyecto Creado Correctamente')
         } catch (error) {
-            console.log(error)
+            res.status(500).json({error: 'Hubo un error'})
         }
     }
 
@@ -25,7 +25,7 @@ export class ProjectController {
             })
             res.json(projects)
         } catch (error) {
-            console.log(error)
+            res.status(500).json({error: 'Hubo un error'})
         }
     }
 
@@ -39,11 +39,11 @@ export class ProjectController {
             }
             if(project.manager.toString() !== req.user.id.toString() && !project.team.includes(req.user.id)) {
                 const error = new Error('Acción no válida')
-                return res.status(404).json({error: error.message})
+                return res.status(403).json({error: error.message})
             }
             res.json(project)
         } catch (error) {
-            console.log(error)
+            res.status(500).json({error: 'Hubo un error'})
         }
     }
 
@@ -56,7 +56,7 @@ export class ProjectController {
             await req.project.save()
             res.send('Proyecto Actualizado')
         } catch (error) {
-            console.log(error)
+            res.status(500).json({error: 'Hubo un error'})
         }
     }
 
@@ -65,7 +65,7 @@ export class ProjectController {
             await req.project.deleteOne()
             res.send('Proyecto Eliminado')
         } catch (error) {
-            console.log(error)
+            res.status(500).json({error: 'Hubo un error'})
         }
     }
 }
