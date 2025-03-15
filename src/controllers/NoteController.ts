@@ -17,7 +17,7 @@ export class NoteController {
 
         req.task.notes.push(note.id)
         try {
-            await Promise.allSettled([req.task.save(), note.save()])
+            await Promise.all([req.task.save(), note.save()])
             res.send('Nota Creada Correctamente')
         } catch (error) {
             res.status(500).json({error: 'Hubo un error'})
@@ -41,7 +41,7 @@ export class NoteController {
             const error = new Error('Nota no encontrada')
             return res.status(404).json({error: error.message})
         }
-
+        
         if(note.createdBy.toString() !== req.user.id.toString()) {
             const error = new Error('Acción no válida')
             return res.status(401).json({error: error.message})
@@ -50,7 +50,7 @@ export class NoteController {
         req.task.notes = req.task.notes.filter( note => note.toString() !== noteId.toString())
 
         try {
-            await Promise.allSettled([req.task.save(), note.deleteOne()])
+            await Promise.all([req.task.save(), note.deleteOne()])
             res.send('Nota Eliminada')
         } catch (error) {
             res.status(500).json({error: 'Hubo un error'})
